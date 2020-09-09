@@ -82,7 +82,7 @@ class EvaluacionesClaroDriveSteps:
                 webdriver_test_ux, 120, class_name='button-create-resource')
 
             json_eval = UtilsEvaluaciones.establecer_output_status_step(
-                json_eval, 1, 0, True, constantes_evaluaciones_claro_drive.MSG_OUTPUT_INICIO_SESION_SIN_EXITO)
+                json_eval, 1, 0, True, constantes_evaluaciones_claro_drive.MSG_OUTPUT_INICIO_SESION_EXITOSO)
 
         except ElementNotInteractableException as e:
             msg_output = constantes_evaluaciones_claro_drive.MSG_OUTPUT_INICIO_SESION_SIN_EXITO. \
@@ -204,8 +204,6 @@ class EvaluacionesClaroDriveSteps:
 
             input_busqueda = HtmlActions.webdriver_wait_element_to_be_clickable(webdriver_test_ux, 20, id='searchbox')
 
-            HtmlActions.click_html_element(input_busqueda, id='searchbox')
-
             HtmlActions.enviar_data_keys(input_busqueda, nombre_completo_de_la_imagen, id='searchbox')
 
             HtmlActions.enviar_data_keys(input_busqueda, Keys.RETURN, id='searchbox')
@@ -240,7 +238,7 @@ class EvaluacionesClaroDriveSteps:
                         if len(lista_botones) > 0:
                             boton_descarga = lista_botones[-1]
 
-                            boton_descarga.click()
+                            HtmlActions.click_html_element(boton_descarga, class_name='action')
 
                             HtmlActions.webdriver_wait_invisibility_of_element_located(
                                 webdriver_test_ux, 20, css_selector='div.row.type-success')
@@ -332,7 +330,7 @@ class EvaluacionesClaroDriveSteps:
                         if len(lista_botones) > 0:
                             boton_borrar_archivo = lista_botones[-7]
 
-                            boton_borrar_archivo.click()
+                            HtmlActions.click_html_element(boton_borrar_archivo, class_name='action')
 
                             HtmlActions.webdriver_wait_invisibility_of_element_located(
                                 webdriver_test_ux, 20, css_selector='div.row.type-success')
