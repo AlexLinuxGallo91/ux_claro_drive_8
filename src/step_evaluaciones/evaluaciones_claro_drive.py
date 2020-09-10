@@ -197,6 +197,8 @@ class EvaluacionesClaroDriveSteps:
             return json_eval
 
         try:
+            HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
+
             UtilsEvaluaciones.establecer_vista_de_archivos_como_lista(webdriver_test_ux)
 
             # establece el action para mover el mouse a un elemento html
@@ -220,6 +222,9 @@ class EvaluacionesClaroDriveSteps:
             lista_de_divs_de_archivos = webdriver_test_ux.find_elements_by_class_name('filename')
 
             if len(lista_de_divs_de_archivos) != 0:
+
+                HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
+
                 for div in lista_de_divs_de_archivos:
                     nombre_archivo_sin_extension_obtenido = div.find_element_by_class_name(
                         'name-without-extension').get_attribute('innerText')
@@ -236,9 +241,16 @@ class EvaluacionesClaroDriveSteps:
                         lista_botones = div.find_elements_by_class_name('action')
 
                         if len(lista_botones) > 0:
+
+                            HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
+
                             boton_descarga = lista_botones[-1]
 
+                            HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
+
                             HtmlActions.click_html_element(boton_descarga, class_name='action')
+
+                            HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
 
                             HtmlActions.webdriver_wait_invisibility_of_element_located(
                                 webdriver_test_ux, 20, css_selector='div.row.type-success')
@@ -298,6 +310,8 @@ class EvaluacionesClaroDriveSteps:
         try:
             action = ActionChains(webdriver_test_ux)
 
+            HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
+
             HtmlActions.webdriver_wait_invisibility_of_element_located(
                 webdriver_test_ux, 20, css_selector='div.row.type-success')
 
@@ -327,10 +341,16 @@ class EvaluacionesClaroDriveSteps:
                     if nombre_archivo_formateado == nombre_completo_de_la_imagen:
                         lista_botones = div.find_elements_by_class_name('action')
 
+                        HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
+
                         if len(lista_botones) > 0:
                             boton_borrar_archivo = lista_botones[-7]
 
+                            HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
+
                             HtmlActions.click_html_element(boton_borrar_archivo, class_name='action')
+
+                            HtmlActions.verificar_modal_mensaje_de_exito(webdriver_test_ux)
 
                             HtmlActions.webdriver_wait_invisibility_of_element_located(
                                 webdriver_test_ux, 20, css_selector='div.row.type-success')
