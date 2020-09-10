@@ -11,6 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from src.utils.utils_temporizador import Temporizador
 from src.webdriver_actions import webdriver_actions_constantes
+import time
 
 
 class HtmlActions:
@@ -271,6 +272,56 @@ class HtmlActions:
             raise e
 
     @staticmethod
+    def click_en_elemento_html_con_intentos(
+            elemento_html, numero_de_intentos: int = 1, id=None, class_name=None, xpath=None, name=None):
+
+        contador_intentos = 0
+
+        while contador_intentos < numero_de_intentos:
+
+            contador_intentos = contador_intentos + 1
+
+            try:
+                HtmlActions.click_html_element(elemento_html, id, class_name, xpath, name)
+                break
+
+            except ElementNotInteractableException as e:
+                if contador_intentos == numero_de_intentos:
+                    raise e
+                else:
+                    time.sleep(1)
+
+            except NoSuchElementException as e:
+                if contador_intentos == numero_de_intentos:
+                    raise e
+                else:
+                    time.sleep(1)
+
+            except TimeoutException as e:
+                if contador_intentos == numero_de_intentos:
+                    raise e
+                else:
+                    time.sleep(1)
+
+            except ElementClickInterceptedException as e:
+                if contador_intentos == numero_de_intentos:
+                    raise e
+                else:
+                    time.sleep(1)
+
+            except StaleElementReferenceException as e:
+                if contador_intentos == numero_de_intentos:
+                    raise e
+                else:
+                    time.sleep(1)
+
+            except WebDriverException as e:
+                if contador_intentos == numero_de_intentos:
+                    raise e
+                else:
+                    time.sleep(1)
+
+    @staticmethod
     def generar_identificador_excepcion(id=None, xpath=None, link_text=None, partial_link_text=None,
                                         name=None, tag_name=None, class_name=None, css_selector=None):
 
@@ -294,3 +345,20 @@ class HtmlActions:
             identifier_message = 'elemento con el selector css {}'.format(css_selector)
 
         return identifier_message
+
+    @staticmethod
+    def verificar_modal_mensaje_de_exito(web_driver: WebDriver):
+        try:
+            modal_de_exito = web_driver.find_element_by_id('notification')
+            display = modal_de_exito.value_of_css_property('display')
+
+            while display == 'flex':
+                modal_de_exito = web_driver.find_element_by_id('notification')
+                display = modal_de_exito.value_of_css_property('display')
+
+        except NoSuchElementException:
+            pass
+
+
+
+
